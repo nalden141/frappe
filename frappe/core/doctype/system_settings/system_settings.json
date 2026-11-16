@@ -191,7 +191,7 @@
    "fieldname": "time_format",
    "fieldtype": "Select",
    "label": "Time Format",
-   "options": "HH:mm:ss\nHH:mm",
+   "options": "HH:mm:ss\nHH:mm\nhh:mm:ss a\nhh:mm a",
    "reqd": 1
   },
   {

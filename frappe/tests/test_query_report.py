@@ -513,6 +513,20 @@ class TestQueryReport(IntegrationTestCase):
 
 		frappe.delete_doc("Report", REPORT_NAME, delete_permanently=True)
 		frappe.db.commit()
+	def test_xlsx_time_format(self):
+		original_format = frappe.get_system_settings("time_format")
+
+		try:
+			for time_format, expected in (
+				("HH:mm:ss", "HH:mm:ss"),
+				("HH:mm", "HH:mm"),
+				("hh:mm:ss a", "hh:mm:ss AM/PM"),
+				("hh:mm a", "hh:mm AM/PM"),
+			):
+				frappe.db.set_default("time_format", time_format)
+				self.assertEqual(XLSXStyleBuilder.get_time_format(), expected)
+		finally:
+			frappe.db.set_default("time_format", original_format)
 
 	def test_report_for_duplicate_column_names(self):
 		"""Test report with duplicate column names"""
